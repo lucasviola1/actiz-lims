@@ -58,6 +58,8 @@ namespace ActizLims.API.Services
 
         public async Task<IEnumerable<Amostra>> GetFinalizadasUltimos30DiasAsync(int idUser)
         {
+            //Retorno das amostras com Status 'Finalizada' cadastradas nos ultimos 30 dias para gerar relatório
+
             var inicio = DateTime.UtcNow.AddDays(-30);
             var fim = DateTime.UtcNow;
 

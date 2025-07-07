@@ -2,6 +2,7 @@
 
 namespace ActizLims.FrontBlazor.Services
 {
+    //Service para utilizar os items que estao em localStorage 
     public class UserSessionService
     {
         private readonly IJSRuntime _js;

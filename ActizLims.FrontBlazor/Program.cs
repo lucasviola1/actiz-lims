@@ -10,6 +10,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// Adicionando serviços.
 builder.Services.AddScoped<IAmostraServiceBlazor, AmostraServiceBlazor>();
 builder.Services.AddScoped<IAuthServiceBlazor, AuthServiceBlazor>();
 builder.Services.AddScoped<UserSessionService>();

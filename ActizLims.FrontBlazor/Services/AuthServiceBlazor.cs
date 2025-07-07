@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 
 namespace ActizLims.FrontBlazor.Services
 {
+    //Service para login e cadastro de usuarios
     public class AuthServiceBlazor : IAuthServiceBlazor
     {
         private readonly IHttpClientFactory _httpClientFactory;

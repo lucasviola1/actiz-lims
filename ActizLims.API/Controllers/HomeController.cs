@@ -12,6 +12,8 @@ namespace ActizLims.API.Controllers;
 [Route("api/[controller]")]
 public class HomeController : ControllerBase
 {
+    //Controller de Amostras necessário JWT para acesso aos endpoints
+
     private readonly IAmostraService _amostraService;
     public HomeController(IAmostraService amostraService)
     {

@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Adicionando serviços (Injeção de dependencia).
+// Adicionando serviços.
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAmostraService, AmostraService>();
 

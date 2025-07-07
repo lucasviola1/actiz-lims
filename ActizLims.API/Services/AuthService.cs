@@ -24,6 +24,8 @@ namespace ActizLims.API.Services
             if (usuarioLogin is null)
                 return null;
 
+            //Configuração do JWT token gerar o token quando o usuario logar
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Encoding.ASCII.GetBytes(_key);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -42,6 +44,9 @@ namespace ActizLims.API.Services
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            // Retorno com o token criado, nome e id
+
             return new AuthResponse
             {
                 Id = usuarioLogin.id,

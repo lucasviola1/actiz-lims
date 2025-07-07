@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 
 namespace ActizLims.FrontBlazor.Services
 {
+    //Service para requisição nos endpoints da api Amostras
     public class AmostraServiceBlazor : IAmostraServiceBlazor
     {
         private readonly IHttpClientFactory _httpClientFactory;
