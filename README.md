@@ -1,4 +1,4 @@
-Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 .NET 8
 
@@ -14,7 +14,7 @@ JWT (Autenticação)
 
 Swagger (Documentação da API)
 
-Requisitos
+# Requisitos
 
 .NET SDK 8.0+
 
