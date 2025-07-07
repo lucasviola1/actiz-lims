@@ -25,29 +25,35 @@ Visual Studio 2022 (ou superior) ou VS Code
 # 1. Clone o repositório
 
 git clone (https://github.com/lucasviola1/actiz-lims.git)
-cd ActizLims
+cd actiz-lims
 
 # 2. Configure a ConnectionString
 
+Abra o projeto com Visual Studio ou VS Code
+
+Abra o arquivo appsettings.json actiz-lims>ActizLims.API>appsettings.json
+
+Localize:
+
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=ActizLimsDb;Trusted_Connection=True;TrustServerCertificate=True;"
+    "DefaultConnection": "Server=LUCAS(servidor local);Database=ActizLimsDb;Trusted_Connection=True;TrustServerCertificate=True;"
   }
 }
+
+Troque o nome de LUCAS para o nome do seu servidor local
+
+Para achar o nome do seu servidor local:
+
+Abra o SQL Server Management Studio.
+Na janela de conexão, veja o campo Server name.
+O valor que aparece nesse campo é o nome do seu servidor local.
 
 Obs: certifique-se de que o SQL Server está rodando e você tem permissão para criar o banco.
 
 # 3. Execute as migrations do Entity Framework Core
 
-Abra o terminal na pasta ActizLims.API e rode:
-
-dotnet ef database update
-
-ou
-
-Abra o Console do Grenciador de Pacotes(Package Manager) e rode:
-
-Add-Migration v1(nome da sua escolha);
+Abra o Console do Grenciador de Pacotes(Gerenciador de Pacotes do NuGet) e rode:
 
 Update-Database;
 
@@ -74,7 +80,7 @@ Clique em "Start" (F5).
 
 # 5. Acessando a aplicação
 
-Frontend Blazor: http://localhost:5002 (ou porta configurada)
+Frontend Blazor: http://localhost:7017
 
 API (Swagger): https://localhost:7228/swagger
 
