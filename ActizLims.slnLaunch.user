@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Novo Perfil",
+    "Projects": [
+      {
+        "Path": "ActizLims.API\\ActizLims.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ActizLims.FrontBlazor\\ActizLims.FrontBlazor.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

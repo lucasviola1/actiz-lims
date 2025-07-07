@@ -1,0 +1,107 @@
+﻿@page "/adicionaramostra"
+@using ActitzLims.Blazor.Models
+@using ActizLims.FrontBlazor.Services
+
+@inject IHttpClientFactory HttpClientFactory
+@inject IAmostraServiceBlazor AmostraService
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<h3>Adicionar Amostra</h3>
+
+@if (showDialog)
+{
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">Acesso negado</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Você precisa estar logado para adicionar amostras.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" @onclick="IrParaLogin">Ir para login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+<EditForm Model="@novaAmostra" OnValidSubmit="SalvarAmostra">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Código:</label>
+        <InputText class="form-control" @bind-Value="novaAmostra.Codigo" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descrição:</label>
+        <InputText class="form-control" @bind-Value="novaAmostra.Descricao" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Data de Recebimento:</label>
+        <InputDate class="form-control" @bind-Value="novaAmostra.DataRecebimento" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Status:</label>
+        <InputSelect class="form-select" @bind-Value="novaAmostra.Status">
+            @foreach (var status in Enum.GetValues<StatusAmostra>())
+            {
+                <option value="@status">@status</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button class="btn btn-success" type="submit">Salvar</button>
+</EditForm>
+}
+
+@code {
+    private string? Token;
+    private string? UsuarioId;
+    private string? Nome;
+
+    private bool showDialog = false;
+
+    private AmostraBlazor novaAmostra = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Token = await JS.InvokeAsync<string>("localStorage.getItem", "jwt_token");
+        UsuarioId = await JS.InvokeAsync<string>("localStorage.getItem", "usuario_id");
+        Nome = await JS.InvokeAsync<string>("localStorage.getItem", "usuario_nome");
+
+        if (string.IsNullOrEmpty(Token))
+        {
+            showDialog = true;
+            return;
+        }
+    }
+
+    private async Task SalvarAmostra()
+    {
+        novaAmostra.UserId = int.Parse(UsuarioId);
+
+        var response = await AmostraService.CadastrarAmostrasAsync(novaAmostra, Token);
+
+        if (response)
+        {
+            Navigation.NavigateTo("/amostras");
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("alert", "Erro ao salvar amostra.");
+        }
+    }
+
+    private void IrParaLogin()
+    {
+        Navigation.NavigateTo("/pagelogin");
+    }
+}

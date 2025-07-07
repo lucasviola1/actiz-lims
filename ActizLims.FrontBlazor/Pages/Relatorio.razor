@@ -1,0 +1,108 @@
+﻿@page "/relatorio"
+@using ActitzLims.Blazor.Models
+
+@inject IHttpClientFactory HttpClientFactory
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+
+<h3>Relatório dos últimos 30 dias de entregas finalizadas</h3>
+
+@if (showDialog)
+{
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">Acesso negado</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Você precisa estar logado para visualizar o relatório.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" @onclick="IrParaLogin">Ir para login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (amostras is null)
+{
+    <p><em>Carregando...</em></p>
+}
+else if (!amostras.Any())
+{
+    <p>Nenhuma relatório encontrado.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Data Recebimento</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in amostras)
+            {
+                <tr>
+                    <td>@a.Codigo</td>
+                    <td>@a.Descricao</td>
+                    <td>@a.DataRecebimento.ToShortDateString()</td>
+                    <td>@((StatusAmostra)a.Status)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-outline-danger" @onclick="GerarPdfLocal">
+        <i class="bi bi-file-earmark-pdf-fill"></i> Baixar PDF
+    </button>
+}
+
+@code {
+    private bool showDialog = false;
+
+    private string token;
+    private string usuario_id;
+
+    private List<AmostraBlazor> amostras = new();
+
+    private async Task GerarPdfLocal()
+    {
+        await JS.InvokeVoidAsync("gerarPDFDaTabela");
+    }
+
+    private void IrParaLogin()
+    {
+        Navigation.NavigateTo("/pagelogin");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        token = await JS.InvokeAsync<string>("localStorage.getItem", "jwt_token");
+
+        if (string.IsNullOrEmpty(token))
+            showDialog = true;
+
+        usuario_id = await JS.InvokeAsync<string>("localStorage.getItem", "usuario_id");
+
+        var client = HttpClientFactory.CreateClient("API");
+
+        client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        try
+        {
+            var response = await client.GetFromJsonAsync<List<AmostraBlazor>>($"api/Home/relatorio?idUser={usuario_id}");
+            amostras = response ?? new List<AmostraBlazor>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao buscar amostras: {ex.Message}");
+            amostras = new();
+        }
+    }
+}
