@@ -10,9 +10,9 @@ Entity Framework Core (ORM)
 
 SQL Server (Banco de Dados)
 
-JWT (Autenticação)
+JWT (AutenticaÃ§Ã£o)
 
-Swagger (Documentação da API)
+Swagger (DocumentaÃ§Ã£o da API)
 
 Requisitos
 
@@ -22,9 +22,9 @@ SQL Server
 
 Visual Studio 2022 (ou superior) ou VS Code
 
-1. Clone o repositório
+1. Clone o repositÃ³rio
 
-git clone https://github.com/seu-usuario/ActizLims.git
+git clone (https://github.com/lucasviola1/actiz-lims.git)
 cd ActizLims
 
 2. Configure a ConnectionString
@@ -35,7 +35,7 @@ cd ActizLims
   }
 }
 
-Obs: certifique-se de que o SQL Server está rodando e você tem permissão para criar o banco.
+Obs: certifique-se de que o SQL Server estÃ¡ rodando e vocÃª tem permissÃ£o para criar o banco.
 
 3. Execute as migrations do Entity Framework Core
 
@@ -51,13 +51,13 @@ Add-Migration v1(nome da sua escolha);
 
 Update-Database;
 
-Isso criará o banco de dados e aplicará as migrations.
+Isso criarÃ¡ o banco de dados e aplicarÃ¡ as migrations.
 
 4. Execute os projetos
 
-Você pode rodar os dois projetos separadamente ou juntos pela solution no Visual Studio.
+VocÃª pode rodar os dois projetos separadamente ou juntos pela solution no Visual Studio.
 
-Opção 1 – Terminal
+OpÃ§Ã£o 1 â€“ Terminal
 
 cd ActizLims.API
 dotnet run
@@ -66,13 +66,13 @@ dotnet run
 cd ../ActizLims.FrontBlazor
 dotnet run
 
-Opção 2 – Visual Studio
+OpÃ§Ã£o 2 â€“ Visual Studio
 
 Defina os dois projetos para iniciarem juntos.
 
 Clique em "Start" (F5).
 
-5. Acessando a aplicação
+5. Acessando a aplicaÃ§Ã£o
 
 Frontend Blazor: http://localhost:5002 (ou porta configurada)
 
